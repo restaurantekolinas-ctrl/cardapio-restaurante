@@ -4,25 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cardápio Interativo</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f5f5;display:flex;flex-direction:column;align-items:center;padding:10px}
-.cardapio{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.2);max-width:500px;width:100%;margin-bottom:20px}
-.logo-container{display:flex;align-items:center;justify-content:flex-start;margin-bottom:20px}
-.logo-container img{height:60px;margin-right:15px;border-radius:8px}
-.titulo-container h1{font-size:1.5rem;color:#007BFF;margin-bottom:5px}
-.titulo-container h2{font-size:1.1rem;color:#555;font-weight:normal}
-.titulo-container h3{font-size:1rem;margin-bottom:10px;color:#333}
-ul{list-style:none;padding:0}
-li{margin:5px 0;cursor:pointer;display:flex;align-items:center;padding:6px 10px;border-radius:8px;transition:background 0.2s}
-li:hover{background:#f0f0f0}
-.checkbox-fake{width:22px;height:22px;border:2px solid #007BFF;display:flex;align-items:center;justify-content:center;margin-right:10px;border-radius:4px;font-weight:bold;color:#fff;background:#007BFF;opacity:0;transition:opacity 0.2s,transform 0.2s;flex-shrink:0}
-li.selected .checkbox-fake{opacity:1;transform:scale(1.1)}
-li span{flex:1}
-#adicionais,input[type="text"],select{width:100%;padding:8px;margin-top:8px;border-radius:6px;border:1px solid #ccc}
-#enviarWhats{margin-top:12px;padding:10px;background:#25D366;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;width:100%;font-size:1rem}
-label{display:block;margin-top:12px;margin-bottom:6px;cursor:pointer}
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: Arial, sans-serif; background: #f5f5f5; display: flex; flex-direction: column; align-items: center; padding: 10px; }
+.cardapio { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.2); max-width: 500px; width: 100%; margin-bottom: 20px; }
+.logo-container { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 20px; }
+.logo-container img { height: 60px; margin-right: 15px; border-radius: 8px; }
+.titulo-container h1 { font-size: 1.5rem; color: #007BFF; margin-bottom: 5px; }
+.titulo-container h2 { font-size: 1.1rem; color: #555; font-weight: normal; }
+.titulo-container h3 { font-size: 1rem; margin-bottom: 10px; color: #333; }
+ul { list-style: none; padding: 0; }
+li { margin: 5px 0; cursor: pointer; display: flex; align-items: center; padding: 6px 10px; border-radius: 8px; transition: background 0.2s; }
+li:hover { background: #f0f0f0; }
+.checkbox-fake { width: 22px; height: 22px; border: 2px solid #007BFF; display: flex; align-items: center; justify-content: center; margin-right: 10px; border-radius: 4px; font-weight: bold; color: #fff; background: #007BFF; opacity: 0; transition: opacity 0.2s, transform 0.2s; flex-shrink: 0; }
+li.selected .checkbox-fake { opacity: 1; transform: scale(1.1); }
+li span { flex: 1; }
+#adicionais, input[type="text"], select { width: 100%; padding: 8px; margin-top: 8px; border-radius: 6px; border: 1px solid #ccc; }
+#enviarWhats { margin-top: 12px; padding: 10px; background: #25D366; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
+label { display: block; margin-bottom: 6px; cursor: pointer; }
+.marmita-options label { display: block; margin-bottom: 8px; cursor: pointer; }
+.marmita-options input { margin-right: 8px; }
+@media (max-width: 600px) { 
+  .logo-container { flex-direction: column; align-items: center; text-align: center; } 
+  .logo-container img { margin-right: 0; margin-bottom: 8px; height: 50px; } 
+  .titulo-container h1 { font-size: 1.3rem; } 
+  .titulo-container h2 { font-size: 1rem; } 
+  #enviarWhats { font-size: 0.95rem; } 
+}
 </style>
 </head>
 <body>
@@ -33,79 +41,81 @@ label{display:block;margin-top:12px;margin-bottom:6px;cursor:pointer}
     <div class="titulo-container">
       <h1>Restaurante Colinas</h1>
       <h2>🍽️ Cardápio de Hoje – <span id="diaSemana"></span>, <span id="dataHoje"></span></h2>
-      <h3 id="horarioFuncionamento">Horário: 11:00 - 14:00</h3>
+      <h3 id="horarioFuncionamento">Horário: --:-- - --:--</h3>
     </div>
   </div>
 
+  <div class="marmita-options">
+    <h3>🍱 Escolha o tipo de Marmita</h3>
+  </div>
+
   <h3>🍖 Carnes</h3>
-  <ul id="carnes">
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Frango Grelhado</span></li>
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Bife Acebolado</span></li>
-  </ul>
+  <ul id="carnes"></ul>
 
   <h3>🥗 Acompanhamentos</h3>
-  <ul id="acompanhamentos">
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Arroz</span></li>
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Feijão</span></li>
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Salada</span></li>
-  </ul>
+  <ul id="acompanhamentos"></ul>
 
   <h3>🥤 Refrigerantes</h3>
-  <ul id="refrigerantes">
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Coca-Cola</span></li>
-    <li onclick="toggleItem(this)"><div class="checkbox-fake">✔</div><span>Guaraná</span></li>
-  </ul>
+  <ul id="refrigerantes"></ul>
 
   <h3>Adicionais:</h3>
   <input type="text" id="adicionais" placeholder="Digite adicionais">
 
-  <label for="nomeCliente">Nome do Cliente:</label>
-  <input type="text" id="nomeCliente" placeholder="Digite seu nome">
+  <div class="cliente-info">
+    <label for="nomeCliente">Nome do Cliente:</label>
+    <input type="text" id="nomeCliente" placeholder="Digite seu nome">
+    <label for="enderecoCliente">Endereço:</label>
+    <input type="text" id="enderecoCliente" placeholder="Digite o endereço de entrega...">
+  </div>
 
   <button id="enviarWhats">Enviar via WhatsApp</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-function toggleItem(li){
-  li.classList.toggle("selected");
+const carnes = ["Frango Grelhado","Carne de Panela","Linguiça","Bife"];
+const acompanhamentos = ["Arroz","Feijão","Farofa","Salada"];
+const refrigerantes = ["Coca-Cola","Guaraná","Fanta","Água"];
+
+function preencherLista(id, itens){
+  const ul = document.getElementById(id);
+  itens.forEach(item=>{
+    const li = document.createElement('li');
+    li.innerHTML = `<div class="checkbox-fake">✔</div><span>${item}</span>`;
+    li.addEventListener('click', ()=> li.classList.toggle('selected'));
+    ul.appendChild(li);
+  });
 }
+preencherLista('carnes', carnes);
+preencherLista('acompanhamentos', acompanhamentos);
+preencherLista('refrigerantes', refrigerantes);
 
-document.getElementById("enviarWhats").addEventListener("click", async () => {
+document.getElementById('enviarWhats').addEventListener('click', ()=>{
+  const nome = document.getElementById('nomeCliente').value || "Cliente";
+  const endereco = document.getElementById('enderecoCliente').value;
+  const adicionais = document.getElementById('adicionais').value;
+
+  const carnesSel = [...document.querySelectorAll('#carnes li.selected')].map(li=>li.querySelector('span').textContent);
+  const acompSel = [...document.querySelectorAll('#acompanhamentos li.selected')].map(li=>li.querySelector('span').textContent);
+  const refrisSel = [...document.querySelectorAll('#refrigerantes li.selected')].map(li=>li.querySelector('span').textContent);
+
+  const pedido = `Cliente: ${nome}\nEndereço: ${endereco}\n\nCarnes: ${carnesSel.join(', ')}\nAcompanhamentos: ${acompSel.join(', ')}\nRefrigerantes: ${refrisSel.join(', ')}\nAdicionais: ${adicionais}`;
+
+  // Gera PDF
   const { jsPDF } = window.jspdf;
-
-  const nomeCliente = document.getElementById("nomeCliente").value.trim();
-  if (!nomeCliente) {
-    alert("Digite o nome do cliente");
-    return;
-  }
-
-  // ✅ Coletar apenas 1x cada item selecionado
-  const selecionados = [...document.querySelectorAll("li.selected")]
-    .map(li => li.querySelector("span").textContent);
-
-  const adicionais = document.getElementById("adicionais").value.trim();
-
-  let conteudo = `Pedido de ${nomeCliente}\n\nItens Selecionados:\n`;
-  selecionados.forEach(i => conteudo += " - " + i + "\n");
-  if (adicionais) conteudo += "\nAdicionais: " + adicionais;
-
-  // gerar PDF
   const doc = new jsPDF();
-  doc.setFontSize(14);
-  doc.text(conteudo, 10, 20);
-  const pdfBlob = doc.output("blob");
-  const pdfURL = URL.createObjectURL(pdfBlob);
+  doc.text("Pedido Restaurante Colinas", 10, 10);
+  doc.text(pedido, 10, 20);
+  const blob = doc.output('blob');
+  const url = URL.createObjectURL(blob);
 
-  // baixar automaticamente
-  const a = document.createElement("a");
-  a.href = pdfURL;
-  a.download = `pedido_${nomeCliente}.pdf`;
-  a.click();
+  // Abre PDF para enviar manualmente
+  window.open(url, "_blank");
 
-  // abrir conversa no WhatsApp (número do restaurante)
-  const numeroRestaurante = "5599999999999"; // coloque DDI+DDD+número
-  const texto = encodeURIComponent(`Olá, segue o pedido do cliente ${nomeCliente}. O PDF está em anexo.`);
-  window.open(`https://wa.me/${numeroRestaurante}?text=${texto}`, "_blank");
+  // Abre WhatsApp com o nome do cliente
+  const restaurante = "55DDDNUMEROAQUI"; // coloque o número do restaurante
+  const msg = encodeURIComponent(`Olá, segue o pedido do cliente ${nome}. O PDF está anexo.`);
+  window.open(`https://wa.me/${restaurante}?text=${msg}`, "_blank");
 });
 </script>
 </body>
