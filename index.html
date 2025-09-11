@@ -84,8 +84,7 @@ label { display: block; margin-bottom: 6px; cursor: pointer; }
 <script>
 const diasSemana = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
 const hojeDate = new Date();
-const nomeDia = diasSemana[hojeDate.getDay()];
-document.getElementById("diaSemana").innerText = nomeDia;
+document.getElementById("diaSemana").innerText = diasSemana[hojeDate.getDay()];
 const dia = String(hojeDate.getDate()).padStart(2,'0');
 const mes = String(hojeDate.getMonth()+1).padStart(2,'0');
 const ano = hojeDate.getFullYear();
@@ -114,7 +113,7 @@ fetch('cardapio.json?t=' + new Date().getTime())
         else limiteCarnes = 0;
 
         document.querySelectorAll("#carnes li").forEach(li=>li.classList.remove("selected"));
-        pedido = pedido.filter(item => !cardapioFinal.cardapio[nomeDia.toLowerCase()].carnes.includes(item));
+        pedido = pedido.filter(item => !cardapioFinal.cardapio[diasSemana[hojeDate.getDay()].toLowerCase()].carnes.includes(item));
 
         const acompanhamentosContainer = document.getElementById("acompanhamentos");
         if (key.includes("Porção")) {
@@ -123,7 +122,7 @@ fetch('cardapio.json?t=' + new Date().getTime())
             li.style.pointerEvents = "none";
             li.style.opacity = "0.5";
           });
-          pedido = pedido.filter(item => !cardapioFinal.cardapio[nomeDia.toLowerCase()].acompanhamentos.includes(item));
+          pedido = pedido.filter(item => !cardapioFinal.cardapio[diasSemana[hojeDate.getDay()].toLowerCase()].acompanhamentos.includes(item));
         } else {
           acompanhamentosContainer.querySelectorAll("li").forEach(li=>{
             li.style.pointerEvents = "auto";
@@ -149,20 +148,13 @@ fetch('cardapio.json?t=' + new Date().getTime())
         li.addEventListener("click", ()=>{
           if(tipo==="carnes"){
             const selecionadas = container.querySelectorAll("li.selected");
-            
-            
-            if(li.classList.contains("selected")){
-              // Adiciona apenas no refrigerantesSelecionados
-              if(!refrigerantesSelecionados.find(r => r.nome === item)){
-                refrigerantesSelecionados.push({nome: item, preco});
-              }
-            } else {
-              refrigerantesSelecionados = refrigerantesSelecionados.filter(r => r.nome !== item);
-            }
-
-
-
-          
+            if(!li.classList.contains("selected") && selecionadas.length >= limiteCarnes) return;
+          }
+          li.classList.toggle("selected");
+          const item = li.getAttribute("data-item");
+          if(li.classList.contains("selected")){
+            if(!pedido.includes(item)) pedido.push(item);
+          } else pedido = pedido.filter(x=>x!==item);
           atualizarPedido();
         });
         container.appendChild(li);
@@ -180,11 +172,11 @@ fetch('cardapio.json?t=' + new Date().getTime())
           const item = li.getAttribute("data-item");
           const preco = parseFloat(item.split('R$')[1]) || 0;
           if(li.classList.contains("selected")){
-            refrigerantesSelecionados.push({nome: item, preco});
-            if(!pedido.includes(item)) pedido.push(item);
+            if(!refrigerantesSelecionados.find(r => r.nome === item)){
+              refrigerantesSelecionados.push({nome: item, preco});
+            }
           } else {
             refrigerantesSelecionados = refrigerantesSelecionados.filter(r => r.nome !== item);
-            pedido = pedido.filter(x=>x!==item);
           }
           atualizarPedido();
         });
@@ -192,7 +184,7 @@ fetch('cardapio.json?t=' + new Date().getTime())
       });
     }
 
-    const hojeCardapio = cardapioFinal.cardapio[nomeDia.toLowerCase()] || { carnes: [], acompanhamentos: [] };
+    const hojeCardapio = cardapioFinal.cardapio[diasSemana[hojeDate.getDay()].toLowerCase()] || { carnes: [], acompanhamentos: [] };
     criarLista(hojeCardapio.acompanhamentos, document.getElementById("acompanhamentos"), "acompanhamentos");
     criarLista(hojeCardapio.carnes, document.getElementById("carnes"), "carnes");
     criarListaRefrigerantes(
@@ -233,6 +225,7 @@ fetch('cardapio.json?t=' + new Date().getTime())
       itensEl.innerHTML = `
         ${marmita?`<li>🍱 Marmita ${marmita} - R$${valorMarmita}</li>`:""}
         ${pedido.length?pedido.map(i=>`<li>✅ ${i}</li>`).join(""):"<li>Nenhum item selecionado</li>"}
+        ${refrigerantesSelecionados.map(r => `<li>🥤 ${r.nome} - R$${r.preco}</li>`).join("")}
         ${adicionais?`<li>📝 ${adicionais}</li>`:""}
         ${pagamentoSelecionado?`<li>💳 Pagamento: ${pagamentoSelecionado}</li>`:""}
         <li>🏍️ Taxa de Entrega: R$${taxaEntrega.toFixed(2)}</li>
@@ -240,106 +233,76 @@ fetch('cardapio.json?t=' + new Date().getTime())
       `;
     }
 
-    // --------- Aqui está a correção do botão ---------
-  document.getElementById("enviarWhats").addEventListener("click", () => {
-    const agora = new Date();
-    const horas = agora.getHours();
-    const minutos = agora.getMinutes();
-    const agoraMinutos = horas * 60 + minutos;
+    document.getElementById("enviarWhats").addEventListener("click", () => {
+      const agora = new Date();
+      const horas = agora.getHours();
+      const minutos = agora.getMinutes();
+      const agoraMinutos = horas * 60 + minutos;
 
-    const [horaAbertura, minAbertura] = cardapioFinal.horarioFuncionamento.abertura.split(":").map(Number);
-    const [horaFechamento, minFechamento] = cardapioFinal.horarioFuncionamento.fechamento.split(":").map(Number);
-    const aberturaMinutos = horaAbertura * 60 + minAbertura;
-    const fechamentoMinutos = horaFechamento * 60 + minFechamento;
+      const [horaAbertura, minAbertura] = cardapioFinal.horarioFuncionamento.abertura.split(":").map(Number);
+      const [horaFechamento, minFechamento] = cardapioFinal.horarioFuncionamento.fechamento.split(":").map(Number);
+      const aberturaMinutos = horaAbertura * 60 + minAbertura;
+      const fechamentoMinutos = horaFechamento * 60 + minFechamento;
 
-    if (agoraMinutos < aberturaMinutos || agoraMinutos > fechamentoMinutos) {
-        alert(`Desculpe! Pedidos só podem ser feitos entre ${cardapioFinal.horarioFuncionamento.abertura} e ${cardapioFinal.horarioFuncionamento.fechamento}.`);
-        return;
-    }
+      if (agoraMinutos < aberturaMinutos || agoraMinutos > fechamentoMinutos) {
+          alert(`Desculpe! Pedidos só podem ser feitos entre ${cardapioFinal.horarioFuncionamento.abertura} e ${cardapioFinal.horarioFuncionamento.fechamento}.`);
+          return;
+      }
 
-    const nome = document.getElementById("nomeCliente").value || "Cliente";
-    const endereco = document.getElementById("enderecoCliente").value || "Não informado";
-    const adicionais = document.getElementById("adicionais").value || "";
-    const local = document.getElementById("localEntrega").value;
-    const pagamento = pagamentoSelecionado || "Não definido";
+      const nome = document.getElementById("nomeCliente").value || "Cliente";
+      const endereco = document.getElementById("enderecoCliente").value || "Não informado";
+      const adicionais = document.getElementById("adicionais").value || "";
+      const local = document.getElementById("localEntrega").value;
+      const pagamento = pagamentoSelecionado || "Não definido";
 
-    const totalRef = refrigerantesSelecionados.reduce((sum,r)=>sum+r.preco,0);
-    const total = valorMarmita + taxaEntrega + totalRef;
+      const totalRef = refrigerantesSelecionados.reduce((sum,r)=>sum+r.preco,0);
+      const total = valorMarmita + taxaEntrega + totalRef;
 
-    // ---------- Montar mensagem WhatsApp com emojis ----------
-    let msg = `🍽️ *Pedido de ${nome}*\n`;
-    msg += `📍 Endereço: ${endereco}\n`;
-    msg += `🏠 Local: ${local}\n\n`;
-    msg += `📋 *Itens do Pedido:*\n`;
-    if(marmita) msg += `🍱 Marmita ${marmita} - R$${valorMarmita}\n`;
-    pedido.forEach(i => msg += `✅ ${i}\n`);
-    refrigerantesSelecionados.forEach(r => msg += `🥤 ${r.nome} - R$${r.preco}\n`);
-    if(adicionais) msg += `📝 ${adicionais}\n`;
-    msg += `💳 Pagamento: ${pagamento}\n`;
-    msg += `🏍️ Taxa de Entrega: R$${taxaEntrega.toFixed(2)}\n`;
-    msg += `💰 Total: R$${total.toFixed(2)}`;
+      let msg = `🍽️ *Pedido de ${nome}*\n`;
+      msg += `📍 Endereço: ${endereco}\n`;
+      msg += `🏠 Local: ${local}\n\n`;
+      msg += `📋 *Itens do Pedido:*\n`;
+      if(marmita) msg += `🍱 Marmita ${marmita} - R$${valorMarmita}\n`;
+      pedido.forEach(i => msg += `✅ ${i}\n`);
+      refrigerantesSelecionados.forEach(r => msg += `🥤 ${r.nome} - R$${r.preco}\n`);
+      if(adicionais) msg += `📝 ${adicionais}\n`;
+      msg += `💳 Pagamento: ${pagamento}\n`;
+      msg += `🏍️ Taxa de Entrega: R$${taxaEntrega.toFixed(2)}\n`;
+      msg += `💰 Total: R$${total.toFixed(2)}`;
 
-    // Abrir WhatsApp com a mensagem
-    window.open(`https://wa.me/+556192633504?text=${encodeURIComponent(msg)}`, "_blank");
+      window.open(`https://wa.me/+556192633504?text=${encodeURIComponent(msg)}`, "_blank");
 
-    // ---------- Gerar PDF sem emojis ----------
-    // ---------- Gerar PDF sem emojis, mas com formatação melhor ----------
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF();
-
-// Cabeçalho
-doc.setFontSize(18);
-doc.setFont("helvetica", "bold");
-doc.text("Restaurante Colinas", 10, 15);
-doc.setFontSize(12);
-doc.setFont("helvetica", "normal");
-
-// Dados do cliente
-doc.text(`Cliente: ${nome}`, 10, 25);
-doc.text(`Endereço: ${endereco}`, 10, 32);
-doc.text(`Local de entrega: ${local}`, 10, 39);
-
-// Separador
-doc.setLineWidth(0.5);
-doc.line(10, 44, 200, 44);
-
-// Itens do pedido
-doc.setFont("helvetica", "bold");
-doc.text("Itens do Pedido:", 10, 50);
-doc.setFont("helvetica", "normal");
-
-let y = 57;
-if(marmita){ doc.text(`Marmita ${marmita} - R$${valorMarmita}`, 12, y); y+=7; }
-pedido.forEach(i => { doc.text(`${i}`, 12, y); y+=7; });
-refrigerantesSelecionados.forEach(r => { doc.text(`${r.nome} - R$${r.preco}`, 12, y); y+=7; });
-if(adicionais){ doc.text(`Adicionais: ${adicionais}`, 12, y); y+=7; }
-
-// Separador antes do total
-doc.line(10, y, 200, y); y += 5;
-
-// Pagamento e taxa
-doc.text(`Pagamento: ${pagamento}`, 10, y); y+=7;
-doc.text(`Taxa de Entrega: R$${taxaEntrega.toFixed(2)}`, 10, y); y+=7;
-
-// Total destacado
-doc.setFont("helvetica", "bold");
-doc.setFontSize(14);
-doc.text(`TOTAL: R$${total.toFixed(2)}`, 10, y);
-
-// Abrir PDF em nova aba
-const pdfBlob = doc.output('blob');
-const pdfURL = URL.createObjectURL(pdfBlob);
-window.open(pdfURL, "_blank");
-
-});
-
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "bold");
+      doc.text("Restaurante Colinas", 10, 15);
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Cliente: ${nome}`, 10, 25);
+      doc.text(`Endereço: ${endereco}`, 10, 32);
+      doc.text(`Local de entrega: ${local}`, 10, 39);
+      doc.setLineWidth(0.5);
+      doc.line(10, 44, 200, 44);
+      doc.setFont("helvetica", "bold");
+      doc.text("Itens do Pedido:", 10, 50);
+      doc.setFont("helvetica", "normal");
+      let y = 57;
+      if(marmita){ doc.text(`Marmita ${marmita} - R$${valorMarmita}`, 12, y); y+=7; }
+      pedido.forEach(i => { doc.text(`${i}`, 12, y); y+=7; });
+      refrigerantesSelecionados.forEach(r => { doc.text(`${r.nome} - R$${r.preco}`, 12, y); y+=7; });
+      if(adicionais){ doc.text(`Adicionais: ${adicionais}`, 12, y); y+=7; }
+      doc.line(10, y, 200, y); y += 5;
+      doc.text(`Pagamento: ${pagamento}`, 10, y); y+=7;
+      doc.text(`Taxa de Entrega: R$${taxaEntrega.toFixed(2)}`, 10, y); y+=7;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.text(`TOTAL: R$${total.toFixed(2)}`, 10, y);
+      const pdfBlob = doc.output('blob');
+      const pdfURL = URL.createObjectURL(pdfBlob);
+      window.open(pdfURL, "_blank");
+    });
   });
 </script>
 </body>
 </html>
-
-
-
-
-
-
