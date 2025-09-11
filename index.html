@@ -22,9 +22,7 @@ li.selected .checkbox-fake{opacity:1;transform:scale(1.1)}
 li span{flex:1}
 #adicionais,input[type="text"],select{width:100%;padding:8px;margin-top:8px;border-radius:6px;border:1px solid #ccc}
 #enviarWhats{margin-top:12px;padding:10px;background:#25D366;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;width:100%;font-size:1rem}
-label{display:block;margin-bottom:6px;cursor:pointer}
-.marmita-options label{display:block;margin-bottom:8px;cursor:pointer}
-.marmita-options input{margin-right:8px}
+label{display:block;margin-top:12px;margin-bottom:6px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -61,53 +59,51 @@ label{display:block;margin-bottom:6px;cursor:pointer}
   <h3>Adicionais:</h3>
   <input type="text" id="adicionais" placeholder="Digite adicionais">
 
-  <div class="cliente-info">
-    <label for="nomeCliente">Nome do Cliente:</label>
-    <input type="text" id="nomeCliente" placeholder="Digite seu nome">
-  </div>
+  <label for="nomeCliente">Nome do Cliente:</label>
+  <input type="text" id="nomeCliente" placeholder="Digite seu nome">
 
   <button id="enviarWhats">Enviar via WhatsApp</button>
 </div>
 
 <script>
 function toggleItem(li){
-  li.classList.toggle('selected');
+  li.classList.toggle("selected");
 }
 
-document.getElementById('enviarWhats').addEventListener('click', async () => {
+document.getElementById("enviarWhats").addEventListener("click", async () => {
   const { jsPDF } = window.jspdf;
-  const nome = document.getElementById('nomeCliente').value.trim();
-  if (!nome){ alert('Digite o nome do cliente.'); return; }
 
-  const selecionados = [...document.querySelectorAll('li.selected span')].map(s=>s.textContent);
-  const adicionais = document.getElementById('adicionais').value;
-
-  const doc = new jsPDF();
-  doc.setFontSize(14);
-  doc.text("Pedido - Restaurante Colinas", 10, 15);
-  doc.setFontSize(12);
-  doc.text("Cliente: " + nome, 10, 30);
-  doc.text("Itens:", 10, 45);
-  let y = 55;
-  selecionados.forEach(item=>{
-    doc.text("- " + item, 15, y);
-    y += 7;
-  });
-  if(adicionais){
-    doc.text("Adicionais: " + adicionais, 10, y+5);
+  const nomeCliente = document.getElementById("nomeCliente").value.trim();
+  if (!nomeCliente) {
+    alert("Digite o nome do cliente");
+    return;
   }
 
-  // Cria o arquivo PDF e baixa localmente
-  const pdfBlob = doc.output('blob');
+  const selecionados = [...document.querySelectorAll("li.selected span")].map(el => el.textContent);
+  const adicionais = document.getElementById("adicionais").value.trim();
+
+  let conteudo = `Pedido de ${nomeCliente}\n\n`;
+  conteudo += "Itens Selecionados:\n";
+  selecionados.forEach(i => conteudo += " - " + i + "\n");
+  if (adicionais) conteudo += "\nAdicionais: " + adicionais;
+
+  // gerar PDF
+  const doc = new jsPDF();
+  doc.setFontSize(14);
+  doc.text(conteudo, 10, 20);
+  const pdfBlob = doc.output("blob");
   const pdfURL = URL.createObjectURL(pdfBlob);
-  const a = document.createElement('a');
+
+  // baixar automaticamente
+  const a = document.createElement("a");
   a.href = pdfURL;
-  a.download = `pedido_${nome}.pdf`;
+  a.download = `pedido_${nomeCliente}.pdf`;
   a.click();
 
-  // Abre o WhatsApp Web com o número do restaurante
-  const numeroRestaurante = "5599999999999"; // <-- coloque o número do restaurante com DDI e DDD
-  window.open(`https://wa.me/${numeroRestaurante}?text=Olá,%20segue%20em%20anexo%20o%20pedido%20de%20${encodeURIComponent(nome)}.%20(O%20arquivo%20PDF%20foi%20baixado%20automaticamente%20no%20seu%20dispositivo)`, "_blank");
+  // abrir conversa no WhatsApp (número do restaurante)
+  const numeroRestaurante = "5599999999999"; // coloque o número do restaurante com DDI e DDD
+  const texto = encodeURIComponent(`Olá, segue o pedido do cliente ${nomeCliente}. O PDF está em anexo.`);
+  window.open(`https://wa.me/${numeroRestaurante}?text=${texto}`, "_blank");
 });
 </script>
 
