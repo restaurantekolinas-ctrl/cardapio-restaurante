@@ -149,13 +149,20 @@ fetch('cardapio.json?t=' + new Date().getTime())
         li.addEventListener("click", ()=>{
           if(tipo==="carnes"){
             const selecionadas = container.querySelectorAll("li.selected");
-            if(!li.classList.contains("selected") && selecionadas.length >= limiteCarnes) return;
-          }
-          li.classList.toggle("selected");
-          const item = li.getAttribute("data-item");
-          if(li.classList.contains("selected")){
-            if(!pedido.includes(item)) pedido.push(item);
-          } else pedido = pedido.filter(x=>x!==item);
+            
+            
+            if(li.classList.contains("selected")){
+              // Adiciona apenas no refrigerantesSelecionados
+              if(!refrigerantesSelecionados.find(r => r.nome === item)){
+                refrigerantesSelecionados.push({nome: item, preco});
+              }
+            } else {
+              refrigerantesSelecionados = refrigerantesSelecionados.filter(r => r.nome !== item);
+            }
+
+
+
+          
           atualizarPedido();
         });
         container.appendChild(li);
@@ -330,6 +337,7 @@ window.open(pdfURL, "_blank");
 </script>
 </body>
 </html>
+
 
 
 
