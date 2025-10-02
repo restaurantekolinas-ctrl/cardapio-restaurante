@@ -5,62 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cardápio Interativo</title>
 <style>
-* { box-sizing: border-box; margin:0; padding:0; }
-body { font-family: Arial, sans-serif; background: #f5f5f5; display: flex; flex-direction: column; align-items: center; padding: 10px; }
-.cardapio { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.2); max-width: 500px; width: 100%; margin-bottom: 20px; }
-.logo-container { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 20px; }
-.logo-container img { height: 60px; margin-right: 15px; border-radius: 8px; }
-.titulo-container h1 { font-size: 1.5rem; color: #007BFF; margin-bottom: 5px; }
-.titulo-container h2 { font-size: 1.1rem; color: #555; font-weight: normal; }
-.titulo-container h3 { font-size: 1rem; margin-bottom: 10px; color: #333; }
-ul { list-style: none; padding: 0; }
-li { margin: 5px 0; cursor: pointer; display: flex; align-items: center; padding: 6px 10px; border-radius: 8px; transition: background 0.2s; }
-li:hover { background: #f0f0f0; }
-.checkbox-fake { width: 22px; height: 22px; border: 2px solid #007BFF; display: flex; align-items: center; justify-content: center; margin-right: 10px; border-radius: 4px; font-weight: bold; color: #fff; background: #007BFF; opacity: 0; transition: opacity 0.2s, transform 0.2s; flex-shrink: 0; }
-li.selected .checkbox-fake { opacity: 1; transform: scale(1.1); }
-li span { flex: 1; }
-#adicionais, input[type="text"], select { width: 100%; padding: 8px; margin-top: 8px; border-radius: 6px; border: 1px solid #ccc; }
-#enviarWhats { margin-top: 12px; padding: 10px; background: #25D366; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
-label { display: block; margin-bottom: 6px; cursor: pointer; }
-.marmita-options label { display: block; margin-bottom: 8px; cursor: pointer; }
-.marmita-options input { margin-right: 8px; }
-button.mais, button.menos { width: 30px; height: 30px; border-radius: 6px; border: none; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin: 0 4px; background: #007BFF; color: #fff; transition: 0.2s; }
-button.mais:hover, button.menos:hover { background: #0056b3; }
-.quantidade { min-width: 20px; text-align: center; display: inline-block; }
-@media (max-width: 600px) { 
-  .logo-container { flex-direction: column; align-items: center; text-align: center; } 
-  .logo-container img { margin-right: 0; margin-bottom: 8px; height: 50px; } 
-  .titulo-container h1 { font-size: 1.3rem; } 
-  .titulo-container h2 { font-size: 1rem; } 
-  #enviarWhats { font-size: 0.95rem; } 
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;display:flex;flex-direction:column;align-items:center;padding:10px}
+.cardapio{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,0.2);max-width:500px;width:100%;margin-bottom:20px}
+.logo-container{display:flex;align-items:center;justify-content:flex-start;margin-bottom:20px}
+.logo-container img{height:60px;margin-right:15px;border-radius:8px}
+.titulo-container h1{font-size:1.5rem;color:#007BFF;margin-bottom:5px}
+.titulo-container h2{font-size:1.1rem;color:#555;font-weight:normal}
+.titulo-container h3{font-size:1rem;margin-bottom:10px;color:#333}
+ul{list-style:none;padding:0}
+li{margin:5px 0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:8px;transition:background 0.2s}
+li:hover{background:#f0f0f0}
+.checkbox-fake{width:22px;height:22px;border:2px solid #007BFF;display:flex;align-items:center;justify-content:center;margin-right:10px;border-radius:4px;font-weight:bold;color:#fff;background:#007BFF;opacity:0;transition:opacity 0.2s,transform 0.2s;flex-shrink:0}
+li.selected .checkbox-fake{opacity:1;transform:scale(1.1)}
+li span{flex:1}
+.quantidade-container{display:flex;align-items:center;gap:4px}
+.quantidade-container button{width:24px;height:24px;background:#007BFF;color:#fff;border:none;border-radius:4px;font-weight:bold;cursor:pointer}
+.quantidade-container input{width:40px;text-align:center;border:1px solid #ccc;border-radius:4px;padding:2px}
+#adicionais,#observacao,input[type="text"],select,textarea{width:100%;padding:8px;margin-top:8px;border-radius:6px;border:1px solid #ccc}
+#taxaEntregaInfo{margin:12px 0;background:#e8f0fe;border:1px solid #007BFF;color:#007BFF;font-weight:bold;text-align:center;padding:8px;border-radius:8px}
+#enviarWhats{margin-top:12px;padding:10px;background:#25D366;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;width:100%;font-size:1rem}
+label{display:block;margin-bottom:6px;cursor:pointer}
+.marmita-options label{display:block;margin-bottom:8px;cursor:pointer}
+.marmita-options input{margin-right:8px}
+#adicionarPedido{margin:10px 0;padding:8px;width:100%;border-radius:8px;border:1px solid #007BFF;background:#007BFF;color:#fff;cursor:pointer;font-weight:bold}
+.pedido-individual{border:1px solid #ccc;padding:10px;margin:10px 0;border-radius:8px;background:#f9f9f9}
+.pedido-individual h4{margin-bottom:5px}
+@media(max-width:600px){
+.logo-container{flex-direction:column;align-items:center;text-align:center}
+.logo-container img{margin-right:0;margin-bottom:8px;height:50px}
+.titulo-container h1{font-size:1.3rem}
+.titulo-container h2{font-size:1rem}
+#enviarWhats,#adicionarPedido{font-size:0.95rem}
 }
-.checkbox-fake { 
-  width: 22px; 
-  height: 22px; 
-  border: 2px solid #007BFF; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  margin-right: 10px; 
-  border-radius: 4px; 
-  font-weight: bold; 
-  color: #fff; 
-  background: #007BFF; 
-  opacity: 0; 
-  transition: opacity 0.2s, transform 0.2s; 
-  flex-shrink: 0; 
-}
-li.selected .checkbox-fake { 
-  opacity: 1; 
-  transform: scale(1.1); 
-}
-.hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<div class="cardapio">
+  <div class="cardapio">
   <div class="logo-container">
     <img src="logo.png" alt="Logo Restaurante">
     <div class="titulo-container">
@@ -68,47 +50,66 @@ li.selected .checkbox-fake {
       <h2>🍽️ Cardápio de Hoje – <span id="diaSemana"></span>, <span id="dataHoje"></span></h2>
       <h3 id="horarioFuncionamento">Horário: --:-- - --:--</h3>
     </div>
-
-    <button id="abrirMaisPessoas" style="display:flex;align-items:left;gap:8px;padding:5px 8px;background:#007BFF;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:1rem;justify-content:flex-start;width:fit-content;margin-bottom:15px;">
-      <span style="font-size:1.2rem;">➕Mais Pedidos</span> <span></span>
-    </button>
   </div>
 
-  <div class="marmita-options">
-    <h3>🍱 Escolha o tipo de Marmita</h3>
-  </div>
 
-  <h3>🍖 Carnes</h3>
-  <ul id="carnes"></ul>
+ <label>Local de Entrega:</label>
+<select id="localEntrega" required>
+  <option value="retirada" selected data-taxa="0">📍 Retirada no Local</option>
+  <option value="entrega" data-taxa="5">🏠 Entrega em Casa</option>
+</select>
 
-  <h3>🥗 Acompanhamentos</h3>
-  <ul id="acompanhamentos"></ul>
+<div id="enderecoContainer" style="display:none;">
+  <label for="endereco">📍 Endereço de Entrega (único para todos os pedidos)</label>
+  <input type="text" id="endereco" placeholder="Digite o endereço de entrega">
+</div>
 
-  <h3>🥤 Refrigerantes</h3>
-  <ul id="refrigerantes"></ul>
+<div id="taxaEntregaInfo">📍 Retirada no Local</div>
 
-  <h3>Adicionais (cada adicional +R$4,00)</h3>
-  <input type="text" id="adicionais" placeholder="Digite adicionais">
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const localEntrega = document.getElementById("localEntrega");
+  const enderecoContainer = document.getElementById("enderecoContainer");
+  const enderecoInput = document.getElementById("endereco");
+  const taxaEntregaInfo = document.getElementById("taxaEntregaInfo");
 
-  <h3>Observações:</h3>
-  <input type="text" id="observacoes" placeholder="Digite observações livres">
+  function atualizarCampo() {
+    const localEscolhido = localEntrega.value.toLowerCase();
+    const taxa = parseFloat(localEntrega.selectedOptions[0]?.dataset.taxa || 0);
 
-  <div class="cliente-info">
-    <label for="nomeCliente">Nome do Cliente:</label>
-    <input type="text" id="nomeCliente" placeholder="Digite seu nome">
-    <div id="enderecoWrapper">
-      <label for="enderecoCliente">Endereço:</label>
-      <input type="text" id="enderecoCliente" placeholder="Digite o endereço de entrega">
-    </div>
-  </div>
+    if (localEscolhido === "retirada") {
+      enderecoContainer.style.display = "none";
+      enderecoInput.value = "📍 Retirada no Local";
+      enderecoInput.readOnly = true;
+      enderecoInput.required = false;
+      enderecoInput.style.background = "#eee";
+      taxaEntregaInfo.innerHTML = "📍 Pegar no Local";
+    } else {
+      enderecoContainer.style.display = "block";
+      enderecoInput.value = "";
+      enderecoInput.readOnly = false;
+      enderecoInput.required = true;
+      enderecoInput.style.background = "#fff";
+      taxaEntregaInfo.innerHTML = `🏍️ Taxa de entrega: R$ ${taxa.toFixed(2)}`;
+    }
+  }
 
-  <h3>📍 Local de Entrega</h3> 
-  <select id="localEntrega"></select>
+  atualizarCampo();
+  localEntrega.addEventListener("change", atualizarCampo);
+});
+</script>
 
-  <h3>💳 Formas de Pagamento</h3>
-  <ul id="formasPagamentoList"></ul>
-  
-  <div id="trocoContainer" style="display:none; margin-top:10px;">
+
+
+  <div id="pedidosContainer"></div>
+<button id="adicionarPedido">➕Mais Pedido</button>
+
+ <label for="pagamento">💳 Forma de Pagamento (única para todos)</label>
+  <select id="pagamento">
+    <option value="" disabled selected>Carregando opções...</option>
+  </select>
+
+<div id="trocoContainer" style="display:none; margin-top:10px;">
   <label for="valorPago">💵 Valor pago (Dinheiro)</label>
   <input type="number" id="valorPago" placeholder="Digite o valor pago" min="0" step="0.01">
   <p id="trocoInfo" style="margin-top:5px; font-weight:bold;"></p>
@@ -117,499 +118,615 @@ li.selected .checkbox-fake {
 
 
 
-  <button id="enviarWhats">Enviar via WhatsApp</button>
+  <h3>📋 Pedidos Selecionados</h3>
+  <ul id="itensPedido">
+    <li>Nenhum pedido adicionado</li>
+  </ul>
 
-  <h3>📋 Pedido Selecionado</h3>
-  <ul id="itensPedido"><li>Nenhum item selecionado</li></ul>
+  <button id="enviarWhats">📲 Enviar para WhatsApp e PDF</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const diasSemana = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+// ========== DATA ==========
+const diasSemana = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
 const hojeDate = new Date();
-document.getElementById("diaSemana").innerText = diasSemana[hojeDate.getDay()].charAt(0).toUpperCase() + diasSemana[hojeDate.getDay()].slice(1);
-document.getElementById("dataHoje").innerText = `${String(hojeDate.getDate()).padStart(2,'0')}/${String(hojeDate.getMonth()+1).padStart(2,'0')}/${hojeDate.getFullYear()}`;
+document.getElementById("diaSemana").innerText = diasSemana[hojeDate.getDay()];
+const dia = String(hojeDate.getDate()).padStart(2,'0');
+const mes = String(hojeDate.getMonth()+1).padStart(2,'0');
+const ano = hojeDate.getFullYear();
+document.getElementById("dataHoje").innerText = `${dia}/${mes}/${ano}`;
 
-document.getElementById('abrirMaisPessoas').addEventListener('click', () => {
-    window.open('mais_pessoas.html', '_blank');
-});
+// ========== VARIÁVEIS ==========
+let pedidos = [];
+let cardapioFinal = null;
 
-// Variáveis globais do cardápio
-let marmita = "";
-let valorMarmita = 0;
-let limiteCarnes = 0;
-let pedido = [];
-let taxaEntrega = 0;
-let pagamentoSelecionado = "";
-
+// ========== FUNÇÃO ATUALIZAR PEDIDOS ==========
 function atualizarPedido() {
-    const adicionais = document.getElementById("adicionais").value;
-    const observacoes = document.getElementById("observacoes").value;
+  const itensEl = document.getElementById("itensPedido");
+  if (pedidos.length === 0) {
+    itensEl.innerHTML = "<li>Nenhum pedido adicionado</li>";
+    return;
+  }
 
-    const refrigerantesLi = Array.from(document.querySelectorAll("#refrigerantes li"));
-    let totalRef = 0;
-    refrigerantesLi.forEach(li => {
-        const qtd = parseInt(li.querySelector(".quantidade")?.innerText || 0);
-        const preco = parseFloat(li.dataset.preco || 0);
-        totalRef += qtd * preco;
-    });
+  let html = "";
+  let totalGeral = 0;
+  const taxa = parseFloat(document.getElementById("localEntrega").selectedOptions[0]?.dataset.taxa || 0);
 
-    const total = valorMarmita + taxaEntrega + totalRef + (adicionais ? 4 : 0);
+  pedidos.forEach((p, i) => {
+    let subtotal = p.valorMarmita || 0;
 
-    const itensEl = document.getElementById("itensPedido");
-    itensEl.innerHTML = `
-        ${marmita ? `<li>🍱 Marmita ${marmita} - R$${valorMarmita.toFixed(2)}</li>` : ""}
-        ${pedido.length ? pedido.map(i => `<li>✅ ${i}</li>`).join("") : "<li>Nenhum item selecionado</li>"}
-        ${refrigerantesLi.map(li => { const qtd=parseInt(li.querySelector(".quantidade")?.innerText || 0); return qtd ? `<li>🥤 ${li.querySelector("span").innerText} x ${qtd} = R$${(parseFloat(li.dataset.preco) * qtd).toFixed(2)}</li>` : ""; }).join("")}
-        ${adicionais ? `<li>📝 ${adicionais} (+R$4,00)</li>` : ""}
-        ${observacoes ? `<li>📝 Observação: ${observacoes}</li>` : ""}
-        ${pagamentoSelecionado ? `<li>💳 Pagamento: ${pagamentoSelecionado}</li>` : ""}
-        <li>🏍️ Taxa de Entrega: R$${taxaEntrega.toFixed(2)}</li>
-        <li>💰 Total: R$${total.toFixed(2)}</li>
-    `;
+    html += `<li><strong>Pedido ${i+1} - ${p.nome || "Cliente"}</strong><br>`;
+    if (p.marmita) html += `🍱 Marmita ${p.marmita} - R$${(p.valorMarmita||0).toFixed(2)}<br>`;
+    if (p.carnes.length) html += `🍖 Carnes: ${p.carnes.join(", ")}<br>`;
+    if (p.acompanhamentos.length) html += `🥗 Acompanhamentos: ${p.acompanhamentos.join(", ")}<br>`;
+
+    if (p.refrigerantes.length) {
+      p.refrigerantes.forEach(r => {
+        html += `🥤 ${r.nome} x${r.qtd} - R$${(r.preco*r.qtd).toFixed(2)}<br>`;
+        subtotal += r.preco*r.qtd;
+      });
+    }
+
+    if (p.adicionais && p.adicionais.trim() !== "") {
+      html += `📝 Adicionais: ${p.adicionais} - R$4.00<br>`;
+      subtotal += 4.00;
+    }
+
+    if (p.observacao && p.observacao.trim() !== "") {
+      html += `💬 Obs: ${p.observacao}<br>`;
+    }
+
+    html += `<strong>Subtotal: R$${subtotal.toFixed(2)}</strong></li>`;
+    totalGeral += subtotal;
+  });
+
+  totalGeral += taxa;
+  html += `<li><strong>Total Geral (com taxa R$${taxa.toFixed(2)}): R$${totalGeral.toFixed(2)}</strong></li>`;
+  itensEl.innerHTML = html;
 }
 
-// Fetch do cardapio.json
+// ========== CARREGAR CARDÁPIO ==========
 fetch('cardapio.json?t=' + new Date().getTime())
-  .then(response => {
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return response.json();
-  })
-  .then(cardapioFinal => {
+.then(res => res.json())
+.then(data => {
+  cardapioFinal = data;
+  document.getElementById("horarioFuncionamento").textContent = 
+    `Horário: ${data.horarioFuncionamento.abertura} - ${data.horarioFuncionamento.fechamento}`;
 
-    // Atualiza horário de funcionamento
-    const horarioEl = document.getElementById("horarioFuncionamento");
-    horarioEl.textContent = cardapioFinal.horarioFuncionamento
-        ? `Horário: ${cardapioFinal.horarioFuncionamento.abertura} - ${cardapioFinal.horarioFuncionamento.fechamento}`
-        : "Horário: --:-- - --:--";
+  // Locais
+  const localSelect = document.getElementById("localEntrega");
+  localSelect.innerHTML = '<option value="" disabled selected>Selecione o local</option>';
+  data.locaisEntrega.forEach((loc) => {
+    const opt = document.createElement("option");
+    opt.value = loc.nome;
+    opt.dataset.taxa = loc.taxa;
+    opt.textContent = `${loc.nome} - R$${loc.taxa.toFixed(2)}`;
+    localSelect.appendChild(opt);
+  });
 
-    const marmitaOptions = document.querySelector(".marmita-options");
 
-    // Criar opções de marmita
-    if (cardapioFinal.valoresMarmita) {
-        Object.keys(cardapioFinal.valoresMarmita).forEach(key => {
-            const label = document.createElement("label");
-            const valor = parseFloat(cardapioFinal.valoresMarmita[key]).toFixed(2);
-            label.innerHTML = `<input type="radio" name="marmita" value="${key}"> Marmita ${key} - R$${valor}`;
-            label.querySelector('input').addEventListener("change", () => {
-                marmita = key;
-                valorMarmita = parseFloat(cardapioFinal.valoresMarmita[key]);
-                limiteCarnes = key.includes("01 Opção") ? 1 : key.includes("02 Opção") ? 2 : 0;
 
-                // Limpar carnes selecionadas
-                document.querySelectorAll("#carnes li").forEach(li => li.classList.remove("selected"));
-                pedido = pedido.filter(item => !(cardapioFinal.cardapio[diasSemana[hojeDate.getDay()]]?.carnes || []).includes(item));
+// Pagamento
+const pagamentoSelect = document.getElementById("pagamento");
+pagamentoSelect.innerHTML = '';
+if (data.formasPagamento && Array.isArray(data.formasPagamento) && data.formasPagamento.length) {
+  const defaultOpt = document.createElement('option');
+  defaultOpt.value = '';
+  defaultOpt.textContent = 'Selecione a forma de pagamento';
+  defaultOpt.disabled = true;
+  defaultOpt.selected = true;
+  pagamentoSelect.appendChild(defaultOpt);
 
-                // Habilitar/desabilitar acompanhamentos
-                const acompanhamentosContainer = document.getElementById("acompanhamentos");
-                if (key.includes("Porção")) {
-                    acompanhamentosContainer.querySelectorAll("li").forEach(li => { 
-                        li.classList.remove("selected"); 
-                        li.style.pointerEvents = "none"; 
-                        li.style.opacity = "0.5"; 
-                    });
-                    pedido = pedido.filter(item => !(cardapioFinal.cardapio[diasSemana[hojeDate.getDay()]]?.acompanhamentos || []).includes(item));
-                } else {
-                    acompanhamentosContainer.querySelectorAll("li").forEach(li => { 
-                        li.style.pointerEvents = "auto"; 
-                        li.style.opacity = "1"; 
-                    });
-                }
-                atualizarPedido();
-            });
-            marmitaOptions.appendChild(label);
-        });
-    }
-
-    // Função para criar listas
-    function criarLista(itens, container, tipo = "normal") {
-    container.innerHTML = "";
-    itens.forEach(i => {
-        const li = document.createElement("li");
-        li.setAttribute("data-item", i);
-
-        // Adiciona a checkbox fake com o X
-        li.innerHTML = `<div class="checkbox-fake">X</div><span>${i}</span>`;
-
-        // Se não for carnes, já adiciona ao pedido inicialmente
-        if (tipo !== "carnes") { 
-            if (!pedido.includes(i)) pedido.push(i); 
-            li.classList.add("selected"); // exibe o X via CSS
-        }
-
-        li.addEventListener("click", () => {
-            if (tipo === "carnes") {
-                const sel = container.querySelectorAll("li.selected");
-                if (!li.classList.contains("selected") && sel.length >= limiteCarnes) return;
-            }
-
-            li.classList.toggle("selected");
-
-            const item = li.getAttribute("data-item");
-            if (li.classList.contains("selected")) {
-                if (!pedido.includes(item)) pedido.push(item);
-            } else {
-                pedido = pedido.filter(x => x !== item);
-            }
-
-            atualizarPedido();
-        });
-
-        container.appendChild(li);
-    });
-
+  data.formasPagamento.forEach(fp => {
+    const o = document.createElement('option');
+    o.value = fp;
+    o.textContent = fp;
+    pagamentoSelect.appendChild(o);
+  });
+} else {
+  pagamentoSelect.innerHTML = `
+    <option value="" disabled selected>Selecione a forma de pagamento</option>
+    <option value="Dinheiro">Dinheiro</option>
+    <option value="Pix">Pix</option>
+    <option value="Cartão">Cartão</option>
+  `;
 }
 
+const trocoContainer = document.getElementById("trocoContainer");
+const valorPagoInput = document.getElementById("valorPago");
+const trocoInfo = document.getElementById("trocoInfo");
 
+// Função para calcular o troco
+function atualizarTroco() {
+  const valorPago = parseFloat(valorPagoInput.value) || 0;
+  const taxa = parseFloat(document.getElementById('localEntrega').selectedOptions[0]?.dataset.taxa || 0);
 
+  let totalGeral = pedidos.reduce((total, p) => {
+    let subtotal = p.valorMarmita || 0;
+    if (p.refrigerantes) p.refrigerantes.forEach(r => subtotal += r.preco * r.qtd);
+    if (p.adicionais) subtotal += 4.00;
+    return total + subtotal;
+  }, 0) + taxa;
 
+  if (valorPago > 0) {
+    const troco = valorPago - totalGeral;
+    trocoInfo.textContent = troco >= 0
+      ? `💰 Troco estimado: R$ ${troco.toFixed(2)}`
+      : `💸 Falta: R$ ${Math.abs(troco).toFixed(2)}`;
+  } else {
+    trocoInfo.textContent = "";
+  }
+}
 
-    // Criar lista de refrigerantes
-    function criarListaRefrigerantes(refrigerantesObj, container){
-        if (!container) return;
-        container.innerHTML = "";
-        const todosRefrigerantes = [];
-        Object.values(refrigerantesObj || {}).forEach(arr => arr.forEach(r => todosRefrigerantes.push(r)));
-
-        todosRefrigerantes.forEach(r => {
-            const li = document.createElement("li");
-            li.style.display = "flex";
-            li.style.justifyContent = "space-between";
-            li.style.alignItems = "center";
-            li.dataset.preco = r.preco;
-            li.innerHTML = `
-                <span>${r.nome} - R$${parseFloat(r.preco).toFixed(2)}</span>
-                <div>
-                    <button class="menos">-</button>
-                    <span class="quantidade">0</span>
-                    <button class="mais">+</button>
-                </div>
-            `;
-            let qtd = 0;
-            const qtdSpan = li.querySelector(".quantidade");
-            li.querySelector(".mais").addEventListener("click", () => { qtd++; qtdSpan.innerText = qtd; atualizarPedido(); });
-            li.querySelector(".menos").addEventListener("click", () => { if(qtd>0){ qtd--; qtdSpan.innerText = qtd; atualizarPedido(); } });
-            container.appendChild(li);
-        });
-    }
-
-    // Locais de entrega
-    const localSelect = document.getElementById("localEntrega");
-
-    // Primeiro: adicionar a opção RETIRAR NO LOCAL (taxa 0)
-    const optRetirada = document.createElement("option");
-    optRetirada.value = "Retirar no Local";
-    optRetirada.textContent = `Retirar no Local - R$0.00`;
-    optRetirada.dataset.taxa = "0";
-    localSelect.appendChild(optRetirada);
-
-    (cardapioFinal.locaisEntrega || []).forEach((loc, i) => {
-        const opt = document.createElement("option");
-        opt.value = loc.nome;
-        opt.dataset.taxa = loc.taxa;
-        opt.textContent = `${loc.nome} - R$${loc.taxa.toFixed(2)}`;
-        localSelect.appendChild(opt);
-    });
-
-    // definir taxa inicial com o primeiro disponível
-    taxaEntrega = parseFloat(localSelect.selectedOptions[0].dataset.taxa || 0);
-
-    // ao mudar local de entrega: ajustar taxa e esconder/exibir endereço conforme Retirada
-    document.getElementById("localEntrega").addEventListener("change", () => {
-        const sel = document.getElementById("localEntrega").selectedOptions[0];
-        taxaEntrega = parseFloat(sel.dataset.taxa || 0);
-
-        const enderecoWrapper = document.getElementById("enderecoWrapper");
-        if (sel.value === "Retirar no Local") {
-            // esconder campo de endereço e limpar seu valor
-            enderecoWrapper.classList.add('hidden');
-            document.getElementById("enderecoCliente").value = "";
-        } else {
-            enderecoWrapper.classList.remove('hidden');
-        }
-
-        atualizarPedido();
-    });
-
-    // Formas de pagamento
-(cardapioFinal.formasPagamento || []).forEach(f => {
-    const li = document.createElement("li");
-    li.innerHTML = `<div class="checkbox-fake">X</div><span>${f}</span>`;
-    li.addEventListener("click", () => {
-        document.getElementById("formasPagamentoList").querySelectorAll("li").forEach(l => l.classList.remove("selected"));
-        li.classList.add("selected");
-        pagamentoSelecionado = f;
-
-        // Mostrar campo troco apenas para Dinheiro
-              
-        if (f.toLowerCase().includes("dinheiro")) {
-            document.getElementById("trocoContainer").style.display = "block";
-        } else {
-            document.getElementById("trocoContainer").style.display = "none";
-            document.getElementById("valorPago").value = "";
-            document.getElementById("trocoInfo").innerText = "";
-        }
-
-        atualizarPedido();
-    });
-    document.getElementById("formasPagamentoList").appendChild(li);
+// Exibir troco apenas quando "Dinheiro" for selecionado
+pagamentoSelect.addEventListener("change", () => {
+  if (pagamentoSelect.value === "Dinheiro") {
+    trocoContainer.style.display = "block";
+    atualizarTroco();
+  } else {
+    trocoContainer.style.display = "none";
+    trocoInfo.textContent = "";
+  }
 });
 
-// Atualizar troco dinamicamente
-document.getElementById("valorPago").addEventListener("input", () => {
-    const valorPago = parseFloat(document.getElementById("valorPago").value) || 0;
-    const total = parseFloat(document.querySelector("#itensPedido li:last-child")?.innerText.replace("💰 Total: R$", "") || 0);
+// Atualiza troco enquanto digita o valor pago
+valorPagoInput.addEventListener("input", atualizarTroco);
 
-    if (valorPago > 0 && total > 0) {
-        const troco = valorPago - total;
-        document.getElementById("trocoInfo").innerText = troco >= 0 
-            ? `Troco: R$${troco.toFixed(2)}`
-            : "Valor insuficiente 💸";
-    } else {
-        document.getElementById("trocoInfo").innerText = "";
+
+
+
+
+
+ 
+
+// Atualiza taxa + endereço quando muda local
+localSelect.addEventListener('change', () => {
+  const enderecoInput = document.getElementById("endereco");
+  const enderecoContainer = document.getElementById("enderecoContainer");
+  const taxa = parseFloat(localSelect.selectedOptions[0]?.dataset.taxa || 0);
+  const localEscolhido = localSelect.value.toLowerCase();
+
+  document.getElementById('taxaEntregaInfo').textContent = 
+    `🏍️ Taxa de entrega: R$ ${taxa.toFixed(2)}`;
+
+  if (localEscolhido.includes("retirada")) {
+    // Retirada no local → não precisa de endereço
+    enderecoContainer.style.display = "none";
+    enderecoInput.value = "Retirada no Local";
+    enderecoInput.readOnly = true;
+    enderecoInput.required = false;
+    enderecoInput.style.background = "#eee";
+  } else {
+    // Entrega → mostra campo endereço
+    enderecoContainer.style.display = "block";
+    if (enderecoInput.value === "Retirada no Local") {
+      enderecoInput.value = "";
     }
+    enderecoInput.readOnly = false;
+    enderecoInput.required = true;
+    enderecoInput.style.background = "#fff";
+  }
+
+  atualizarPedido();
 });
-
-
-
-
-
-
-    // Criar listas do dia
-    const hojeCardapio = cardapioFinal.cardapio[diasSemana[hojeDate.getDay()]] || { carnes: [], acompanhamentos: [] };
-    criarLista(hojeCardapio.acompanhamentos, document.getElementById("acompanhamentos"), "acompanhamentos");
-    criarLista(hojeCardapio.carnes, document.getElementById("carnes"), "carnes");
-    criarListaRefrigerantes(cardapioFinal.refrigerantes, document.getElementById("refrigerantes"));
-
-    document.getElementById("adicionais").addEventListener("input", atualizarPedido);
-    document.getElementById("observacoes").addEventListener("input", atualizarPedido);
-
-    // atualizar UI inicial (caso a opção retirada esteja selecionada por default)
-    (function initLocalBehaviour(){
-        const sel = localSelect.selectedOptions[0];
-        if (sel && sel.value === "Retirar no Local") {
-            document.getElementById("enderecoWrapper").classList.add('hidden');
-            taxaEntrega = 0;
-        }
-        atualizarPedido();
-    })();
 
 })
-.catch(err => {
-    console.error("Erro ao carregar cardapio.json:", err);
-    alert("Não foi possível carregar o cardápio. Verifique se o arquivo cardapio.json está disponível e se o servidor está rodando.");
-});
-</script>
-<script>
+.catch(err=>{ console.error('Erro ao carregar cardapio.json', err); });
 
+
+
+
+
+
+// ========== ADICIONAR PEDIDO ==========
+document.getElementById("adicionarPedido").addEventListener("click", criarPedido);
+
+function criarPedido() {
+  if (!cardapioFinal) return alert("Aguarde o carregamento do cardápio...");
+  const index = pedidos.length;
+  const pedidoObj = { 
+    nome:"", 
+    marmita:"", 
+    carnes:[], 
+    acompanhamentos:[], 
+    refrigerantes:[], 
+    adicionais:"", 
+    valorAdicionais:0, 
+    observacao:"",
+    valorMarmita:0
+  };
+  pedidos.push(pedidoObj);
+
+  const container = document.createElement("div");
+  container.classList.add("pedido-individual");
+  container.dataset.index = index;
+
+  container.innerHTML = `
+    <h4>Pedido da Pessoa ${index + 1}</h4>
+    <label>👤 Nome do Cliente:</label>
+    <input type="text" class="nomeCliente" placeholder="Nome do cliente">
+    <div class="marmita-options"><h4>🍱 Tipo de Marmita</h4></div>
+    <h4>🍖 Carnes</h4><ul class="carnes"></ul>
+    <h4>🥗 Acompanhamentos</h4><ul class="acompanhamentos"></ul>
+    <h4>🥤 Refrigerantes</h4><ul class="refrigerantes"></ul>
+    <h4>Adicionais:</h4>
+    <input type="text" class="adicionais" placeholder="Digite adicionais">
+  `;
+
+  document.getElementById("pedidosContainer").appendChild(container);
+
+  // === NOVO: colocar foco no campo nome do cliente ===
+container.querySelector(".nomeCliente").focus();
+
+// === NOVO: rolar até o final do container geral ===
+container.scrollIntoView({ behavior: "smooth", block: "end" });
+
+ // Atualizar nome do cliente
+  container.querySelector(".nomeCliente").addEventListener("input", e=>{
+    pedidoObj.nome = e.target.value.trim();
+    atualizarPedido();
+  });
+  
+
+  // ========== CONFIGURAR MARMITA ==========
+  let limiteCarnes = 0;
+  const marmitaContainer = container.querySelector(".marmita-options");
+
+  const hojeCardapio = cardapioFinal.cardapio[diasSemana[hojeDate.getDay()].toLowerCase()] || { carnes: [], acompanhamentos: [] };
+  const acompanhamentosPadrao = {
+    "01": hojeCardapio.acompanhamentos,
+    "02": hojeCardapio.acompanhamentos
+  };
+
+  Object.keys(cardapioFinal.valoresMarmita).forEach(key => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="radio" name="marmita${index}" value="${key}"> Marmita ${key} - R$${cardapioFinal.valoresMarmita[key]},00`;
+    label.querySelector("input").addEventListener("change", () => {
+      pedidoObj.marmita = key;
+      pedidoObj.valorMarmita = cardapioFinal.valoresMarmita[key];
+
+      limiteCarnes = key.includes("01") ? 1 : key.includes("02") ? 2 : 0;
+
+      const acompLis = container.querySelectorAll(".acompanhamentos li");
+      if (key.toLowerCase().includes("porção")) {
+        acompLis.forEach(li => {
+          li.classList.remove("selected");
+          li.style.pointerEvents = "none";
+        });
+        pedidoObj.acompanhamentos = [];
+      } else {
+        acompLis.forEach(li => {
+          li.classList.toggle("selected", acompanhamentosPadrao[key]?.includes(li.dataset.item));
+          li.style.pointerEvents = "auto";
+        });
+        pedidoObj.acompanhamentos = Array.from(acompLis).filter(li => li.classList.contains("selected")).map(li => li.dataset.item);
+      }
+
+      container.querySelectorAll(".carnes li").forEach(li => li.classList.remove("selected"));
+      pedidoObj.carnes = [];
+      atualizarPedido();
+    });
+    marmitaContainer.appendChild(label);
+  });
+
+  // ========== FUNÇÃO AUXILIAR PARA LISTAS ==========
+  function criarLista(itens, ulContainer, tipo, unico = false) {
+    ulContainer.innerHTML = "";
+    itens.forEach(i => {
+      const li = document.createElement("li");
+      li.setAttribute("data-item", i);
+      li.innerHTML = `<div class="checkbox-fake">✔</div><span>${i}</span>`;
+      if (tipo === 'acompanhamentos') li.style.pointerEvents = 'none';
+      li.addEventListener("click", () => {
+        const selecionados = Array.from(ulContainer.querySelectorAll("li.selected"));
+        if (tipo === "carnes" && !li.classList.contains("selected") && selecionados.length >= limiteCarnes) return;
+        if (unico) ulContainer.querySelectorAll("li").forEach(l => l.classList.remove("selected"));
+        li.classList.toggle("selected");
+        pedidoObj[tipo] = Array.from(ulContainer.querySelectorAll("li.selected")).map(x => x.dataset.item);
+        atualizarPedido();
+      });
+      ulContainer.appendChild(li);
+    });
+  }
+
+  criarLista(hojeCardapio.carnes, container.querySelector(".carnes"), "carnes");
+  criarLista(hojeCardapio.acompanhamentos, container.querySelector(".acompanhamentos"), "acompanhamentos");
+
+  // ========== REFRIGERANTES COM QUANTIDADE ==========
+  const refrigerantesHoje = [];
+  Object.values(cardapioFinal.refrigerantes).forEach(tipo => 
+    tipo.forEach(r => refrigerantesHoje.push({ nome: r.nome, preco: r.preco }))
+  );
+
+  function criarListaRefrigerantes(itens, ulContainer) {
+    ulContainer.innerHTML = "";
+    itens.forEach(i => {
+      const li = document.createElement("li");
+      li.dataset.item = i.nome;
+      li.innerHTML = `
+        <span>${i.nome} - R$${i.preco.toFixed(2)}</span>
+        <div class="quantidade-container">
+          <button type="button" class="menos">-</button>
+          <input type="number" class="qtd" value="0" min="0" readonly>
+          <button type="button" class="mais">+</button>
+        </div>
+      `;
+
+      const qtdInput = li.querySelector(".qtd");
+      const btnMenos = li.querySelector(".menos");
+      const btnMais = li.querySelector(".mais");
+
+      function atualizarQtd() {
+        const qtd = parseInt(qtdInput.value);
+        const existente = pedidoObj.refrigerantes.find(r => r.nome === i.nome);
+        if (qtd > 0) {
+          if (existente) {
+            existente.qtd = qtd;
+          } else {
+            pedidoObj.refrigerantes.push({ nome: i.nome, qtd: qtd, preco: i.preco });
+          }
+        } else {
+          pedidoObj.refrigerantes = pedidoObj.refrigerantes.filter(r => r.nome !== i.nome);
+        }
+        atualizarPedido();
+      }
+
+      btnMais.addEventListener("click", () => {
+        qtdInput.value = parseInt(qtdInput.value) + 1;
+        atualizarQtd();
+      });
+
+      btnMenos.addEventListener("click", () => {
+        if (parseInt(qtdInput.value) > 0) {
+          qtdInput.value = parseInt(qtdInput.value) - 1;
+          atualizarQtd();
+        }
+      });
+
+      ulContainer.appendChild(li);
+    });
+  }
+
+  criarListaRefrigerantes(refrigerantesHoje, container.querySelector(".refrigerantes"));
+
+  // ========== ADICIONAIS COM VALOR FIXO ==========
+  const adicionaisInput = container.querySelector(".adicionais");
+  adicionaisInput.addEventListener("input", () => {
+    pedidoObj.adicionais = adicionaisInput.value.trim();
+    pedidoObj.valorAdicionais = pedidoObj.adicionais ? 4.00 : 0.00;
+    atualizarPedido();
+  });
+
+  // ========== OBSERVAÇÃO ==========
+  const obsLabel = document.createElement("label");
+  obsLabel.textContent = "📌 Observação:";
+  const obsInput = document.createElement("textarea");
+  obsInput.classList.add("observacao");
+  obsInput.placeholder = "Digite alguma observação...";
+  obsInput.addEventListener("input", () => {
+    pedidoObj.observacao = obsInput.value.trim();
+  });
+  container.appendChild(obsLabel);
+  container.appendChild(obsInput);
+}
 
 
 
 
 // ========== ENVIAR WHATSAPP E GERAR PDF ==========
 document.getElementById("enviarWhats").addEventListener("click", () => {
-    const endereco = document.getElementById("enderecoCliente").value.trim();
-    const localNome = document.getElementById("localEntrega").value;
-    const pagamentoGlobal = pagamentoSelecionado;
-    const taxa = parseFloat(document.getElementById('localEntrega').selectedOptions[0]?.dataset.taxa || 0);
+  const endereco = document.getElementById("endereco").value.trim();
+  let localNome = document.getElementById("localEntrega").value;
+  const pagamentoGlobal = document.getElementById('pagamento').value;
+  const taxa = parseFloat(document.getElementById('localEntrega').selectedOptions[0]?.dataset.taxa || 0);
+  const valorPago = parseFloat(document.getElementById("valorPago")?.value) || 0;
 
-    const valorPago = parseFloat(document.getElementById("valorPago").value) || 0;
+  // Ajuste: se não selecionar local ou taxa = 0, considerar Retirar no Local
+  if (!localNome || taxa === 0) {
+    localNome = "Retirar no Local";
+  }
 
-    // Validações
-    if (localNome !== "Retirar no Local" && !endereco) 
-        return alert("Informe o endereço de entrega.");
-    if (!localNome) 
-        return alert("Escolha o local de entrega.");
-    if (!pagamentoGlobal) 
-        return alert("Escolha a forma de pagamento.");
-    if (!marmita && pedido.length === 0 && !document.getElementById("adicionais").value) 
-        return alert("Nenhum item selecionado.");
+  if (taxa > 0 && !endereco) {
+    return alert("Informe o endereço de entrega.");
+  }
 
-    const pedidos = [{
-        nome: document.getElementById("nomeCliente").value || "Cliente",
-        marmita,
-        valorMarmita,
-        carnes: Array.from(document.querySelectorAll("#carnes li.selected")).map(li => li.querySelector("span").innerText),
-        acompanhamentos: Array.from(document.querySelectorAll("#acompanhamentos li.selected")).map(li => li.querySelector("span").innerText),
-        refrigerantes: Array.from(document.querySelectorAll("#refrigerantes li")).map(li => ({
-            nome: li.querySelector("span").innerText,
-            qtd: parseInt(li.querySelector(".quantidade").innerText || 0),
-            preco: parseFloat(li.dataset.preco)
-        })).filter(r => r.qtd > 0),
-        adicionais: document.getElementById("adicionais").value.trim(),
-        observacao: document.getElementById("observacoes").value.trim()
-    }];
+  if (!pagamentoGlobal) return alert("Escolha a forma de pagamento.");
+  if (pedidos.length === 0) return alert("Nenhum pedido adicionado.");
 
-    // ======== LISTA DE CLIENTES ========
-    const nomesClientes = pedidos.map(p => p.nome).join(", ");
+  const nomesClientes = pedidos.map(p => p.nome || "Cliente").join(", ");
 
-    let msg = `🍽️ *Pedidos do cliente: ${nomesClientes}*\n📍 Local: ${localNome}\n`;
-    if (localNome !== "Retirar no Local") 
-        msg += `📍 Endereço: ${endereco}\n`;
-    msg += `💳 Pagamento: ${pagamentoGlobal}\n`;
+  // ===== Cálculo do total geral =====
+  let totalGeral = pedidos.reduce((total, p) => {
+    let subtotal = p.valorMarmita || 0;
+    if (p.refrigerantes) p.refrigerantes.forEach(r => subtotal += r.preco * r.qtd);
+    if (p.adicionais) subtotal += 4.00;
+    return total + subtotal;
+  }, 0) + taxa;
 
-    let totalGeral = 0;
+  // ===== Cálculo do troco =====
+  let trocoTexto = "";
+  if (pagamentoGlobal === "Dinheiro" && valorPago > 0) {
+    const troco = valorPago - totalGeral;
+    trocoTexto = troco >= 0
+      ? `💰 Troco estimado: R$ ${troco.toFixed(2)}`
+      : `💸 Falta: R$ ${Math.abs(troco).toFixed(2)}`;
+  }
 
-    pedidos.forEach((p, i) => {
-        msg += `\n📌 Pedido ${i + 1} - ${p.nome}\n`;
-        let subtotal = p.valorMarmita || 0;
+// ===== WhatsApp =====
+let taxaTexto = taxa > 0 
+  ? `🏍️ Taxa de Entrega: R$${taxa.toFixed(2)}`
+  : ""; // remove "Retirar no Local" daqui
 
-        const campos = [];
+let msg = `🍽️ *Pedidos dos clientes: ${nomesClientes}*\n📍 Local: ${localNome}\n` +
+          (taxa > 0 ? "📍 Endereço: " + endereco + "\n" : "") +
+          `💳 Pagamento: ${pagamentoGlobal}\n` +
+          (taxaTexto ? taxaTexto + "\n" : "");
 
-        if (p.marmita) campos.push({ titulo: 'Marmita:', valor: `${p.marmita} - R$${(p.valorMarmita || 0).toFixed(2)}` });
-        if (p.carnes && p.carnes.length) campos.push({ titulo: 'Carnes:', valor: p.carnes.join(", ") });
-        if (p.acompanhamentos && p.acompanhamentos.length) campos.push({ titulo: 'Acomp:', valor: p.acompanhamentos.join(", ") });
+if (trocoTexto) {
+  msg += `Valor do Troco : R$${trocoTexto.replace(/[^\d.,]/g, '')}\n`;
+}
 
-        campos.forEach(c => {
-            msg += `${c.titulo} ${c.valor}\n`;
-        });
+let totalWhats = 0;
 
-        if (p.refrigerantes && p.refrigerantes.length) {
-            p.refrigerantes.forEach(r => {
-                msg += `🥤 ${r.nome} x${r.qtd} - R$${(r.preco * r.qtd).toFixed(2)}\n`;
-                subtotal += r.preco * r.qtd;
-            });
-        }
+pedidos.forEach((p, i) => {
+  msg += `\n📌 Pedido ${i + 1} - ${p.nome || "Cliente"}\n`;
+  let subtotal = p.valorMarmita || 0;
 
-        if (p.adicionais) {
-            msg += `📝 Adicionais: ${p.adicionais} - R$4.00\n`;
-            subtotal += 4.00;
-        }
+  if (p.marmita) msg += `🍱 Marmita ${p.marmita} - R$${(p.valorMarmita || 0).toFixed(2)}\n`;
+  if (p.carnes) p.carnes.forEach(c => msg += `🍖 ${c}\n`);
+  if (p.acompanhamentos) p.acompanhamentos.forEach(a => msg += `🥗 ${a}\n`);
 
-        if (p.observacao) {
-            msg += `💬 Obs: ${p.observacao}\n`;
-        }
-
-        msg += `Subtotal: R$${subtotal.toFixed(2)}\n`;
-        totalGeral += subtotal;
+  if (p.refrigerantes && p.refrigerantes.length) {
+    p.refrigerantes.forEach(r => {
+      msg += `🥤 ${r.nome} x${r.qtd} - R$${(r.preco * r.qtd).toFixed(2)}\n`;
+      subtotal += r.preco * r.qtd;
     });
+  }
 
-    totalGeral += taxa;
+  if (p.adicionais && p.adicionais.trim() !== "") {
+    msg += `📝 Adicionais: ${p.adicionais} - R$4.00\n`;
+    subtotal += 4.00;
+  }
 
-    // Troco, apenas para pagamento em dinheiro
-    if (pagamentoGlobal.toLowerCase().includes("dinheiro")) {
-        const troco = valorPago - totalGeral;
-        if (troco >= 0) {
-            msg += `\n💵 Troco: R$${troco.toFixed(2)}\n`;
-        } else {
-            msg += `\n💵 Troco: ⚠️ Valor insuficiente\n`;
-        }
-    }
+  if (p.observacao && p.observacao.trim() !== "") {
+    msg += `💬 Obs: ${p.observacao}\n`;
+  }
 
-    if (taxa > 0) {
-        msg += `🏍️ Taxa de Entrega: R$${taxa.toFixed(2)}\n`;
-    }
-
-    msg += `\n💸 *TOTAL GERAL: R$${totalGeral.toFixed(2)}*`;
-
-    // Envia mensagem para WhatsApp
-    window.open(`https://wa.me/+556192633504?text=${encodeURIComponent(msg)}`, "_blank");
-
-    // ========== GERAR PDF ==========
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [226, 1000] });
-    const t = texto => texto.normalize("NFC");
-    const larguraMax = 206;
-
-    // Cabeçalho
-    doc.setFont('helvetica', 'bold'); 
-    doc.setFontSize(14); 
-    doc.text(t('Restaurante Kolinas'), 113, 20, { align: 'center' });
-
-    doc.setFont('helvetica', 'normal'); 
-    doc.setFontSize(10); 
-    const data = new Date();
-    const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0');
-    const ano = data.getFullYear();
-    doc.text(t(`Pedidos de ${dia}/${mes}/${ano}`), 113, 35, { align: 'center' });
-
-    // Informações gerais
-    let y = 55;
-    doc.text(t(`Local: ${localNome}`), 10, y); y += 10;
-    if (localNome !== "Retirar no Local") {
-        doc.text(t(`Endereço: ${endereco}`), 10, y); y += 10;
-    }
-    doc.text(t(`Pagamento: ${pagamentoGlobal}`), 10, y); y += 10;
-
-    if (pagamentoGlobal.toLowerCase().includes("dinheiro")) {
-        const troco = valorPago - totalGeral;
-        if (troco >= 0) {
-            doc.text(t(`Troco: R$${troco.toFixed(2)}`), 10, y); 
-        } else {
-            doc.text(t(`Troco: ⚠️ Valor insuficiente`), 10, y);
-        }
-        y += 10;
-    }
-
-    if (taxa > 0) {
-        doc.text(t(`Taxa de entrega: R$${taxa.toFixed(2)}`), 10, y); y += 10;
-    }
-
-    let totalGeralPDF = 0;
-
-    pedidos.forEach((p, i) => {
-        doc.setDrawColor(0);
-        doc.setLineWidth(0.5);
-        doc.line(10, y, 216, y); y += 10;
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.text(`PEDIDO ${i + 1} - ${p.nome}`, 10, y); y += 12;
-
-        let subtotal = p.valorMarmita || 0;
-        const campos = [];
-
-        if (p.marmita) campos.push({ titulo: 'Marmita:', valor: `${p.marmita} - R$${(p.valorMarmita || 0).toFixed(2)}` });
-        if (p.carnes && p.carnes.length) campos.push({ titulo: 'Carnes:', valor: `${p.carnes.join(", ")}` });
-        if (p.acompanhamentos && p.acompanhamentos.length) campos.push({ titulo: 'Acomp:', valor: `${p.acompanhamentos.join(", ")}` });
-
-        if (p.refrigerantes && p.refrigerantes.length) {
-            const bebidasText = p.refrigerantes.map(r => `${r.nome} x${r.qtd} - R$${(r.preco*r.qtd).toFixed(2)}`).join(", ");
-            campos.push({ titulo: 'Bebidas:', valor: bebidasText });
-            p.refrigerantes.forEach(r => subtotal += r.preco*r.qtd);
-        }
-
-        if (p.adicionais && p.adicionais.trim() !== "") {
-            campos.push({ titulo: 'Adicionais:', valor: `${p.adicionais} - R$4.00` });
-            subtotal += 4.00;
-        }
-
-        if (p.observacao && p.observacao.trim() !== "") {
-            campos.push({ titulo: 'Obs:', valor: p.observacao });
-        }
-
-        campos.forEach(c => {
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            const linhas = doc.splitTextToSize(`${c.titulo} ${c.valor}`, larguraMax);
-            doc.text(linhas, 10, y);
-            y += linhas.length * 10;
-        });
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.text(`Subtotal: R$${subtotal.toFixed(2)}`, 10, y); y += 15;
-
-        totalGeralPDF += subtotal;
-    });
-
-    doc.setDrawColor(0);
-    doc.setLineWidth(0.8);
-    doc.line(10, y, 216, y);
-    y += 15;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(12);
-    doc.text(`TOTAL GERAL: R$${totalGeralPDF.toFixed(2)}`, 10, y);
-
-    doc.save('Pedidos.pdf');
+  msg += `Subtotal: R$${subtotal.toFixed(2)}\n`;
+  totalWhats += subtotal;
 });
 
+totalWhats += taxa;
+msg += `\n💸 *TOTAL GERAL: R$${totalWhats.toFixed(2)}*`;
 
+window.open(`https://wa.me/+556192633504?text=${encodeURIComponent(msg)}`, "_blank");
+
+
+
+
+// ===== PDF SIMPLES =====
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: [226, 1000] });
+const t = texto => texto.normalize("NFC");
+const larguraMax = 206;
+
+// Cabeçalho
+doc.setFont('helvetica', 'bold'); 
+doc.setFontSize(14); 
+doc.text(t('Restaurante Kolinas'), 113, 20, { align: 'center' });
+
+const hoje = new Date();
+const dia = String(hoje.getDate()).padStart(2, '0');
+const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+const ano = hoje.getFullYear();
+
+doc.setFont('helvetica', 'normal'); 
+doc.setFontSize(10); 
+doc.text(t(`Pedidos de ${dia}/${mes}/${ano}`), 113, 35, { align: 'center' });
+
+let y = 55;
+[
+  `Local: ${localNome}`,
+  taxa > 0 ? `Endereço: ${endereco}` : null,
+  `Pagamento: ${pagamentoGlobal}`,
+  taxa > 0 ? `Taxa de entrega: R$${taxa.toFixed(2)}` : "Retirar no Local",
+  trocoTexto ? trocoTexto.replace(/^💰\s*/, '') : null // <-- troco só aqui em cima
+].forEach(texto => {
+    if (texto) {
+        const linhas = doc.splitTextToSize(t(texto), larguraMax);
+        doc.text(linhas, 10, y);
+        y += linhas.length * 10;
+    }
+});
+y += 5;
+
+let totalGeralPDF = 0;
+
+pedidos.forEach((p, i) => {
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.5);
+    doc.line(10, y, 216, y);
+    y += 8;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text(`Pedido ${i + 1} - ${p.nome || "Cliente"}`, 10, y);
+    y += 12;
+
+    let subtotal = p.valorMarmita || 0;
+    const campos = [];
+
+    if (p.marmita) campos.push({ titulo: 'Marmita:', valor: `${p.marmita} - R$${(p.valorMarmita || 0).toFixed(2)}` });
+    if (p.carnes && p.carnes.length) campos.push({ titulo: 'Carnes:', valor: `${p.carnes.join(", ")}` });
+    if (p.acompanhamentos && p.acompanhamentos.length) campos.push({ titulo: 'Acompanhamentos:', valor: `${p.acompanhamentos.join(", ")}` });
+
+    if (p.refrigerantes && p.refrigerantes.length) {
+        const bebidasText = p.refrigerantes.map(r => `${r.nome} x${r.qtd} - R$${(r.preco*r.qtd).toFixed(2)}`).join(", ");
+        campos.push({ titulo: 'Bebidas:', valor: bebidasText });
+        p.refrigerantes.forEach(r => subtotal += r.preco*r.qtd);
+    }
+
+    if (p.adicionais && p.adicionais.trim() !== "") {
+        campos.push({ titulo: 'Adicionais:', valor: `${p.adicionais} - R$4.00` });
+        subtotal += 4.00;
+    }
+
+    if (p.observacao && p.observacao.trim() !== "") {
+        campos.push({ titulo: 'Observação:', valor: p.observacao });
+    }
+
+    campos.forEach(c => {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        const linhas = doc.splitTextToSize(`${c.titulo} ${c.valor}`, larguraMax);
+        doc.text(linhas, 10, y);
+        y += linhas.length * 10;
+    });
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text(`Subtotal: R$${subtotal.toFixed(2)}`, 10, y);
+    y += 15;
+
+    totalGeralPDF += subtotal;
+});
+
+// Linha antes do total
+doc.setDrawColor(0);
+doc.setLineWidth(0.8);
+doc.line(10, y, 216, y);
+y += 12; // <-- mais espaço antes do TOTAL GERAL
+
+// Total Geral
+totalGeralPDF += taxa;
+doc.setFont('helvetica', 'bold');
+doc.setFontSize(12);
+doc.text(`TOTAL GERAL: R$${totalGeralPDF.toFixed(2)}`, 10, y);
+
+doc.save('Pedidos.pdf');
+
+
+
+});
+  
 </script>
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
