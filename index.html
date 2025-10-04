@@ -581,8 +581,13 @@ let taxaTexto = taxa > 0
   ? `🏍️ Taxa de Entrega: R$${taxa.toFixed(2)}`
   : ""; // remove "Retirar no Local" daqui
 
+let enderecoTexto = taxa > 0 
+  ? `📍 Endereço de Entrega: ${endereco}` 
+  : "🏠 Retirar no Local";
+
 let msg = `*Pedidos dos clientes: ${nomesClientes}*\n` +
           `Local: ${localNome}\n` +
+          `${enderecoTexto}\n` +
           `Pagamento: ${pagamentoGlobal}\n`;
 
 if (taxaTexto) {
@@ -640,8 +645,8 @@ pedidos.forEach((p, i) => {
 totalWhats += taxa;
 msg += `\n*TOTAL GERAL: R$${totalWhats.toFixed(2)}*`;
 
+window.open(`https://wa.me/+556192633504?text=${encodeURIComponent(msg)}`, "_blank");
 
-  window.open(`https://wa.me/+556192633504?text=${encodeURIComponent(msg)}`, "_blank");
 
   // ===== PDF SIMPLES =====
   const { jsPDF } = window.jspdf;
@@ -749,6 +754,7 @@ msg += `\n*TOTAL GERAL: R$${totalWhats.toFixed(2)}*`;
 </script>
 </body>
 </html>
+
 
 
 
