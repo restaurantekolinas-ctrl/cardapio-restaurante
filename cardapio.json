@@ -125,19 +125,19 @@
   "refrigerantes": {
     "Lata": [
       {
-        "nome": "Coca Cola",
+        "nome": "Coca Cola Lata",
         "preco": 5
       },
       {
-        "nome": "Coca Cola Zero",
+        "nome": "Coca Cola Zero Lata",
         "preco": 5
       },
       {
-        "nome": "Fanta Laranja",
+        "nome": "Fanta Laranja Lata",
         "preco": 5
       },
       {
-        "nome": "Fanta Uva",
+        "nome": "Fanta Uva Lata",
         "preco": 5
       },
       {
@@ -163,7 +163,7 @@
     ],
     "2 Litros": [
       {
-        "nome": "Mineiro",
+        "nome": "Mineiro 2L",
         "preco": 10
       },
       {
