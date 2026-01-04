@@ -1,13 +1,13 @@
 {
   "horarioFuncionamento": {
-    "abertura": "10:30",
-    "fechamento": "14:00"
+    "abertura": "11:30",
+    "fechamento": "23:00"
   },
   "valoresMarmita": {
     "01 Opção de Carne": 15,
     "02 Opção de Carnes": 20,
     "Porção Pequena de Carne": 25,
-    "Porção Grande de Carne": 50
+    "Porção Grande de Carne": 40
   },
   "cardapio": {
     "domingo": {
@@ -21,7 +21,9 @@
         "Feijão",
         "Macarrão alho e óleo",
         "Farofa",
-        "Salada"
+        "Salada",
+        "Maionese",
+        "Verduras cozidas"
       ]
     },
     "segunda-feira": {
@@ -125,60 +127,30 @@
   "refrigerantes": {
     "Lata": [
       {
-        "nome": "Coca Cola Lata",
+        "nome": "Coca Cola",
         "preco": 5
       },
       {
-        "nome": "Coca Cola Zero Lata",
+        "nome": "Coca Cola Zero",
         "preco": 5
       },
       {
-        "nome": "Fanta Laranja Lata",
+        "nome": "Fanta Laranja",
         "preco": 5
       },
       {
-        "nome": "Fanta Uva Lata",
+        "nome": "Fanta Uva",
         "preco": 5
       },
       {
         "nome": "Água Tônica",
         "preco": 5
-      },
-      {
-        "nome": "Sprit Lata",
-        "preco": 5
-      }
-    ],
-    "600ml": [
-      {
-        "nome": "Coca 600ml",
-        "preco": 8
-      }
-    ],
-    "1,5 Litros": [
-      {
-        "nome": "Coca Cola 1,5L",
-        "preco": 11
       }
     ],
     "2 Litros": [
       {
-        "nome": "Mineiro 2L",
+        "nome": "Mineiro",
         "preco": 10
-      },
-      {
-        "nome": "Coca Cola 2L",
-        "preco": 13
-      }
-    ],
-    "Água": [
-      {
-        "nome": "Água Mineral",
-        "preco": 3
-      },
-      {
-        "nome": "Água com Gás",
-        "preco": 3.5
       }
     ]
   },
