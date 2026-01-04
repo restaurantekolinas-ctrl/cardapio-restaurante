@@ -125,35 +125,59 @@
     }
   },
   "refrigerantes": {
-    "Lata": [
-      {
-        "nome": "Coca Cola",
-        "preco": 5
-      },
-      {
-        "nome": "Coca Cola Zero",
-        "preco": 5
-      },
-      {
-        "nome": "Fanta Laranja",
-        "preco": 5
-      },
-      {
-        "nome": "Fanta Uva",
-        "preco": 5
-      },
-      {
-        "nome": "Água Tônica",
-        "preco": 5
-      }
-    ],
-    "2 Litros": [
-      {
-        "nome": "Mineiro",
-        "preco": 10
-      }
-    ]
-  },
+  "Refrigerantes": [
+    {
+      "nome": "Coca Cola Lata",
+      "preco": 5.00
+    },
+    {
+      "nome": "Coca Cola Zero Lata",
+      "preco": 5.00
+    },
+    {
+      "nome": "Fanta Laranja Lata",
+      "preco": 5.00
+    },
+    {
+      "nome": "Fanta Uva Lata",
+      "preco": 5.00
+    },
+    {
+      "nome": "Água Tônica",
+      "preco": 5.00
+    },
+    {
+      "nome": "Sprite Lata",
+      "preco": 5.00
+    },
+    {
+      "nome": "Coca 600ml",
+      "preco": 8.00
+    },
+    {
+      "nome": "Coca Cola 1,5L",
+      "preco": 11.00
+    },
+    {
+      "nome": "Mineiro 2L",
+      "preco": 10.00
+    },
+    {
+      "nome": "Coca Cola 2L",
+      "preco": 13.00
+    },
+    {
+      "nome": "Água Mineral",
+      "preco": 3.00
+    },
+    {
+      "nome": "Água com Gás",
+      "preco": 3.50
+    }
+  ]
+},
+
+  
   "locaisEntrega": [
     {
       "nome": "Alvorada",
