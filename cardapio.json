@@ -181,7 +181,7 @@
   "locaisEntrega": [
     {
       "nome": "Alvorada",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "América do Sul",
@@ -189,7 +189,7 @@
     },
     {
       "nome": "Boa Vista 1",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Boa Vista 2",
@@ -201,15 +201,15 @@
     },
     {
       "nome": "Lunabel 3",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Lunabel 3A",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Lunabel 3B",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Lunabel 3C",
@@ -217,15 +217,15 @@
     },
     {
       "nome": "Lunabel 3H",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Alphaville Paiva",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Jardim Paiva",
-      "taxa": 2
+      "taxa": 3
     },
     {
       "nome": "Cidade Nova",
@@ -233,7 +233,7 @@
     },
     {
       "nome": "Mont Serrat",
-      "taxa": 2
+      "taxa": 3
     }
   ],
   "formasPagamento": [
