@@ -4,10 +4,9 @@
     "fechamento": "14:00"
   },
   "valoresMarmita": {
-    "01 Opção de Carne": 15,
-    "02 Opção de Carnes": 20,
-    "Porção Pequena de Carne": 25,
-    "Porção Grande de Carne": 50
+    "Marmita P - 01 Opção de Carne": 15,
+    "Marmita G - 02 Opção de Carnes": 20,
+    
   },
   "cardapio": {
     "domingo": {
