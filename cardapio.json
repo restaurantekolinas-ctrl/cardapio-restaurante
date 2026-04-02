@@ -212,7 +212,7 @@
     },
     {
       "nome": "Lunabel 3C",
-      "taxa": 3
+      "taxa": 4
     },
     {
       "nome": "Lunabel 3H",
@@ -229,6 +229,10 @@
     {
       "nome": "Cidade Nova",
       "taxa": 6
+    },
+    {
+      "nome": "Residencial Paiva",
+      "taxa": 3
     },
     {
       "nome": "Mont Serrat",
