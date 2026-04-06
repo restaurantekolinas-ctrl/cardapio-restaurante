@@ -158,8 +158,20 @@
       "preco": 11.00
     },
     {
-      "nome": "Mineiro 2L",
+      "nome": "Mineiro 1,5L",
       "preco": 10.00
+    },
+    {
+      "nome": "Mineiro 2L",
+      "preco": 12.00
+    },
+    {
+      "nome": "Coca Cola 1L",
+      "preco": 10.00
+    },
+    {
+      "nome": "Coca Cola 1,5L",
+      "preco": 12.00
     },
     {
       "nome": "Coca Cola 2L",
