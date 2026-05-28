@@ -45,7 +45,6 @@
       "carnes": [
         "Churrasco",
         "Carne de porco frita",
-        "Batata frita",
         "Frango ao molho"
       ],
       "acompanhamentos": [
@@ -53,6 +52,7 @@
         "Feijão",
         "Macarrão alho e óleo",
         "Farofa",
+        "Batata frita",
         "Verduras cozidas",
         "Salada"
        
@@ -78,7 +78,6 @@
       "carnes": [
         "Churrasco",
         "Frango ao molho",
-        
         "Fígado"
       ],
       "acompanhamentos": [
@@ -113,7 +112,6 @@
       "carnes": [
         "Churrasco",
         "Feijoada",
-        "Batata frita",
         "Frango ao molho"
       ],
       "acompanhamentos": [
@@ -122,6 +120,7 @@
         "Macarrão alho e óleo",
         "Farofa",
         "Verduras cozidas",
+        "Batata frita",
         "Salada"
         
       ]
